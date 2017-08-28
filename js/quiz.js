@@ -31,14 +31,18 @@
                 }
                 $scope.myQuestions[qIndex].questionState = 'answered';
             }
+            $scope.percentage = ($scope.score / $scope.totalQuestions)*100;
 
-        }
+        };
 
         $scope.isSelected = function(qIndex, aIndex) {
             return $scope.myQuestions[qIndex].selectedAnswer === aIndex;
-        }
+        };
         $scope.isCorrect = function(qIndex, aIndex) {
             return $scope.myQuestions[qIndex].correctAnswer === aIndex;
+        };
+        $scope.selectContinue = function() {
+            return $scope.activeQuestion += 1;
         }
 
     }]);

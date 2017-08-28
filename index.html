@@ -11,7 +11,12 @@
 		<div id="myQuiz" ng-controller="QuizController">
 			<h1>Test Your Knowledge: <span>Saturn</span></h1>
 			<div class="progress">
-				<div class="{{ ($index === activeQuestion) ? 'on' : 'off' }}" ng-repeat="myQuestion in myQuestions">
+				<div class="
+				{{ ($index === activeQuestion) ? 'on' : 'off' }}
+				{{ (myQuestion.questionState === 'answered') ? 'answered' : 'unanswered' }}
+				{{ (myQuestion.correctness === 'correct') ? 'correct' : 'incorrect' }}
+"
+					 ng-repeat="myQuestion in myQuestions">
 
 				</div>
 			</div>
@@ -21,7 +26,10 @@
 				<p class="btn" ng-click="activeQuestion = 0">Begin</p>
 			</div>
 
-			<div class="question {{ $index === activeQuestion ? 'active' : 'inactive' }} {{ myQuestion.questionState === 'answered' ? 'answered' : 'unanswered' }}" ng-repeat="myQuestion in myQuestions">
+			<div class="question
+			{{ $index === activeQuestion ? 'active' : 'inactive' }}
+			{{ myQuestion.questionState === 'answered' ? 'answered' : 'unanswered' }}"
+				 ng-repeat="myQuestion in myQuestions">
 				<p class="txt">{{ myQuestion.question }}</p>
 				<p class="ans"
 				   ng-class="{
@@ -35,16 +43,16 @@
 				<div class="feedback"></div>
 
 				<div class="feedback">
-				<p>You are <strong>correct</strong></p>
-				<p>Ooops! that is not <strong>correct</strong></p>
-				<p>Additional feedback</p>
-				<div class="btn">Continue</div>
+				<p ng-show="myQuestion.correctness === 'correct'">You are <strong>correct</strong></p>
+				<p ng-show="myQuestion.correctness === 'incorrect'">Ooops! that is not <strong>correct</strong></p>
+				<p>{{ myQuestion.feedback }}</p>
+				<div class="btn" ng-click="selectContinue()">Continue</div>
 				</div>
 			</div>
 
-			<div class="results">
+			<div class="results {{ (totalQuestions === activeQuestion) ? 'active' : 'inactive' }}">
 				<h3>Results</h3>
-				<p>You scored X% by correctly answering X of the total X questions.</p>
+				<p>You scored {{percentage}}% by correctly answering {{score}} of the total {{totalQuestions}} questions.</p>
 				<p>Use the links below to challenge your friends</p>
 				<div class="share">
 					<a href="#" class="btn email">Email</a>
